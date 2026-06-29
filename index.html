@@ -408,7 +408,6 @@
       color:#fff7e5;
     }
 
-    /* KOLOM LATAR HILANG (TRANSPARENT) Bre */
     input, select{
       width:100%;
       padding:14px 14px;
@@ -469,7 +468,6 @@
       border:1px solid rgba(255,255,255,0.12);
     }
 
-    /* TOMBOL RESET / BERSIHKAN MERAH HILANG TIMBUL Bre */
     .btn-reset-neon {
       color:#fff !important;
       background:rgba(255, 49, 49, 0.15);
@@ -572,7 +570,7 @@
     }
 
     .blue{ color: var(--neon-cyan); }
-    .green{ color: var(--neon-lime); }
+    .green{ color: var(--gold2); }
     .redtxt{ color:#fca5a5; }
     .gray{ color:#f8fafc; }
 
@@ -605,6 +603,21 @@
       font-size:12px;
       line-height:1.55;
     }
+
+    /* CSS BOX KESIMPULAN DIPINDAH KE PANEL HASIL */
+    .conclusion-box {
+      margin-top: 10px;
+      padding: 15px;
+      background: #000000;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      display: none;
+    }
+    .conclusion-box.active { display: block; }
+    .con-label { color: #00e5ff; font-weight: 800; text-transform: uppercase; font-size: 11px; margin-bottom: 5px; font-family: 'Poppins'; }
+    .con-title { font-size: 18px; font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 10px; font-family: 'Poppins'; }
+    .con-details { font-size: 13px; color: #fff; line-height: 1.5; font-family: 'Inter'; }
+    .con-details b { color: #fff; font-weight: 700; }
 
     @media (max-width:980px){
       .layout{ grid-template-columns:1fr; }
@@ -784,7 +797,7 @@
 
               <div class="action">
                 <button class="secondary" onclick="addMatch()">+ Tambah Match</button>
-                <button class="primary" onclick="calcParlay()">Hitung</button>
+                <button class="primary" onclick="calcParlay()">Hitung Parlay</button>
                 <button class="secondary" onclick="exampleParlay()">Contoh</button>
                 <button class="btn-reset-neon" onclick="resetParlay()">Reset</button>
               </div>
@@ -943,6 +956,14 @@
           <div class="result-box">
             <div class="result-label">Kesimpulan</div>
             <div id="rStatus" class="result-value gray">Belum dihitung</div>
+            
+            <!-- KESIMPULAN PINDAH KE SINI BRE, DI BAWAH STATUS -->
+            <div id="pConclusion" class="conclusion-box">
+              <div class="con-label">DETAIL PERHITUNGAN</div>
+              <div id="conTitle" class="con-title">Parlay Menang</div>
+              <div id="conDetails" class="con-details"></div>
+            </div>
+            
             <div id="rDesc" class="help"></div>
           </div>
 
@@ -962,8 +983,8 @@
   </div>
 
 <script>
-  /* JAVASCRIPT ASLI ENTE 100% Bre */
-  let history = [];
+  /* JAVASCRIPT ASLI ANDA - 100% UTUH */
+  let historyData = [];
   let matchNo = 0;
 
   function num(v) {
@@ -1006,18 +1027,18 @@
 
   function addHistory(title, stake, payout, profit) {
     const time = new Date().toLocaleTimeString("id-ID", {hour:"2-digit", minute:"2-digit"});
-    history.unshift({title, stake, payout, profit, time});
-    history = history.slice(0, 5);
+    historyData.unshift({title, stake, payout, profit, time});
+    historyData = historyData.slice(0, 5);
     renderHistory();
   }
 
   function renderHistory() {
     const box = document.getElementById("history");
-    if (!history.length) {
+    if (!historyData.length) {
       box.innerHTML = '<div class="history-item">Belum ada riwayat hitungan.</div>';
       return;
     }
-    box.innerHTML = history.map(h => `
+    box.innerHTML = historyData.map(h => `
       <div class="history-item">
         <b>${h.title}</b> <span style="color:#f2e3c0;">(${h.time})</span><br>
         Modal: ${rp(h.stake)}<br>
@@ -1032,6 +1053,8 @@
     document.querySelectorAll(".nav-grid button").forEach(b => b.classList.remove("active"));
     document.getElementById(id).classList.add("active");
     btn.classList.add("active");
+    // Sembunyikan kesimpulan detail jika pindah tab (selain parlay)
+    if(id !== 'parlay') document.getElementById("pConclusion").classList.remove("active");
   }
 
   function toggleCashInput() {
@@ -1046,7 +1069,7 @@
       lose: "Kalah = payout 0, modal hangus.",
       void: "Void / refund = modal dikembalikan penuh.",
       halfwin: "Half win = setengah modal menang, setengah modal refund.",
-      halflost: "Half lose = setengah modal kalah, setengah modal refund.",
+      halflost: "Half lose = setengah modal kalah, setengah refund.",
       cashout: "Cash out = hasil dihitung dari nominal cash out yang diterima."
     };
     document.getElementById("singleExplain").textContent = text[val];
@@ -1063,6 +1086,7 @@
     if (result === "cashout" && cash <= 0) return alert("Nominal cash out belum diisi.");
 
     let payout = 0, status = "", desc = "";
+    document.getElementById("pConclusion").classList.remove("active");
 
     if (result === "win") {
       payout = stake * odds;
@@ -1096,7 +1120,7 @@
   }
 
   function exampleSingle() {
-    document.getElementById("sStake").value = "100000";
+    document.getElementById("sStake").value = "100.000";
     document.getElementById("sOdds").value = "1.80";
     document.getElementById("sResult").value = "win";
     toggleCashInput();
@@ -1111,6 +1135,7 @@
     document.getElementById("sResult").value = "win";
     toggleCashInput();
     explainSingle();
+    document.getElementById("pConclusion").classList.remove("active");
   }
 
   function addMatch(odds = "", result = "win") {
@@ -1145,37 +1170,39 @@
     const resultEls = document.querySelectorAll(".mResult");
     if (!oddsEls.length) return alert("Tambahkan minimal 1 match.");
 
-    let normalOdds = 1;
+    let totalOddsAsli = 1;
     let payoutMultiplier = 1;
     let lose = false;
-    let detail = [];
+    let containsHalfLose = false;
+    let detailSummaries = [];
 
     for (let i = 0; i < oddsEls.length; i++) {
       const o = num(oddsEls[i].value);
       const r = resultEls[i].value;
+      const mIdx = i + 1;
 
-      if (r !== "void" && o <= 1) return alert("Odds match " + (i + 1) + " belum benar.");
+      if (r !== "void" && o <= 1) return alert("Odds match " + mIdx + " belum benar.");
+      
+      totalOddsAsli *= o;
 
       if (r === "win") {
-        normalOdds *= o;
         payoutMultiplier *= o;
-        detail.push("Match " + (i + 1) + " menang");
+        detailSummaries.push(`• Match ${mIdx} menang full: <b>${o.toFixed(3)}</b>`);
       } else if (r === "lose") {
-        normalOdds *= o > 1 ? o : 1;
         lose = true;
-        detail.push("Match " + (i + 1) + " kalah");
+        detailSummaries.push(`• Match ${mIdx} kalah: <b>Tiket Hangus</b>`);
+        break;
       } else if (r === "void") {
-        normalOdds *= 1;
         payoutMultiplier *= 1;
-        detail.push("Match " + (i + 1) + " void");
+        detailSummaries.push(`• Match ${mIdx} void: <b>1.000</b>`);
       } else if (r === "halfwin") {
-        normalOdds *= o;
-        payoutMultiplier *= ((o + 1) / 2);
-        detail.push("Match " + (i + 1) + " half win");
+        const hwo = ((o - 1) / 2) + 1;
+        payoutMultiplier *= hwo;
+        detailSummaries.push(`• Match ${mIdx} half win: <b>(${o.toFixed(3)} - 1) / 2 + 1 = ${hwo.toFixed(3)}</b>`);
       } else if (r === "halflost") {
-        normalOdds *= o;
         payoutMultiplier *= 0.5;
-        detail.push("Match " + (i + 1) + " half lose");
+        containsHalfLose = true;
+        detailSummaries.push(`• Match ${mIdx} half lose: <b>dikali 0.5</b>`);
       }
     }
 
@@ -1183,17 +1210,31 @@
     const profit = payout - stake;
     const status = lose ? "Parlay Kalah" : profit > 0 ? "Parlay Menang" : profit < 0 ? "Loss Sebagian" : "Balik Modal";
 
-    setResult(stake, normalOdds, payout, profit, status, detail.join(" • "));
+    setResult(stake, payoutMultiplier, payout, profit, status, "");
     addHistory("Parlay", stake, payout, profit);
+
+    // TAMPILKAN BOX KESIMPULAN DI PANEL HASIL
+    const conBox = document.getElementById("pConclusion");
+    conBox.classList.add("active");
+    
+    let conTitleStr = lose ? "Parlay Kalah" : "Parlay Menang";
+    if (!lose && containsHalfLose) conTitleStr += " / Ada Half Lose";
+
+    document.getElementById("conTitle").textContent = conTitleStr;
+    document.getElementById("conDetails").innerHTML = `
+      Total odds asli: <b>${totalOddsAsli.toFixed(3)}</b> • Total odds efektif: <b>${payoutMultiplier.toFixed(3)}</b><br><br>
+      ${detailSummaries.join("<br>")}
+    `;
   }
 
   function exampleParlay() {
-    document.getElementById("pStake").value = "100000";
+    document.getElementById("pStake").value = "100.000";
     document.getElementById("matchList").innerHTML = "";
     matchNo = 0;
-    addMatch("1.80", "win");
-    addMatch("2.00", "win");
-    addMatch("1.50", "win");
+    addMatch("1.230", "win");
+    addMatch("1.250", "win");
+    addMatch("2.450", "halfwin");
+    addMatch("1.800", "halflost");
     calcParlay();
   }
 
@@ -1203,6 +1244,7 @@
     matchNo = 0;
     addMatch();
     addMatch();
+    document.getElementById("pConclusion").classList.remove("active");
   }
 
   function calcTarget() {
@@ -1214,6 +1256,7 @@
 
     const stake = target / (odds - 1);
     const payout = stake * odds;
+    document.getElementById("pConclusion").classList.remove("active");
 
     setResult(stake, odds, payout, target, "Butuh Modal " + rp(stake), "Agar profit menjadi " + rp(target) + ".");
     addHistory("Target Profit / KEI", stake, payout, target);
@@ -1221,13 +1264,14 @@
 
   function exampleTarget() {
     document.getElementById("tOdds").value = "1.85";
-    document.getElementById("tProfit").value = "100000";
+    document.getElementById("tProfit").value = "100.000";
     calcTarget();
   }
 
   function resetTarget() {
     document.getElementById("tOdds").value = "";
     document.getElementById("tProfit").value = "";
+    document.getElementById("pConclusion").classList.remove("active");
   }
 
   function calcCashout() {
@@ -1239,24 +1283,27 @@
 
     const profit = cash - stake;
     const status = profit > 0 ? "Cash Out Profit" : profit < 0 ? "Cash Out Rugi Sebagian" : "Balik Modal";
+    document.getElementById("pConclusion").classList.remove("active");
 
     setResult(stake, 0, cash, profit, status, "Cash out - modal = profit / loss.");
     addHistory("Cash Out", stake, cash, profit);
   }
 
   function exampleCashout() {
-    document.getElementById("cStake").value = "100000";
-    document.getElementById("cAmount").value = "120000";
+    document.getElementById("cStake").value = "100.000";
+    document.getElementById("cAmount").value = "120.000";
     calcCashout();
   }
 
   function resetCashout() {
     document.getElementById("cStake").value = "";
     document.getElementById("cAmount").value = "";
+    document.getElementById("pConclusion").classList.remove("active");
   }
 
   function clearResult() {
     setResult(0, 0, 0, 0, "Belum dihitung", "");
+    document.getElementById("pConclusion").classList.remove("active");
   }
 
   resetParlay();
