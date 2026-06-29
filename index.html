@@ -1129,8 +1129,9 @@
     addHistory("Single Bet", stake, payout, profit);
   }
 
+  /* KEMBALIKAN CONTOH SINGLE */
   function exampleSingle() {
-    document.getElementById("sStake").value = "100.000";
+    document.getElementById("sStake").value = "100000";
     document.getElementById("sOdds").value = "1.80";
     document.getElementById("sResult").value = "win";
     toggleCashInput();
@@ -1254,14 +1255,14 @@
     }
   }
 
+  /* KEMBALIKAN CONTOH PARLAY */
   function exampleParlay() {
-    document.getElementById("pStake").value = "100.000";
+    document.getElementById("pStake").value = "100000";
     document.getElementById("matchList").innerHTML = "";
     matchNo = 0;
-    addMatch("1.230", "win");
-    addMatch("1.250", "win");
-    addMatch("2.450", "halfwin");
-    addMatch("1.800", "halflost");
+    addMatch("1.80", "win");
+    addMatch("2.00", "win");
+    addMatch("1.50", "win");
     calcParlay();
   }
 
@@ -1286,9 +1287,10 @@
     addHistory("Target Profit / KEI", stake, payout, target);
   }
 
+  /* KEMBALIKAN CONTOH TARGET */
   function exampleTarget() {
     document.getElementById("tOdds").value = "1.85";
-    document.getElementById("tProfit").value = "100.000";
+    document.getElementById("tProfit").value = "100000";
     calcTarget();
   }
 
@@ -1309,9 +1311,10 @@
     addHistory("Cash Out", stake, cash, profit);
   }
 
+  /* KEMBALIKAN CONTOH CASHOUT */
   function exampleCashout() {
-    document.getElementById("cStake").value = "100.000";
-    document.getElementById("cAmount").value = "120.000";
+    document.getElementById("cStake").value = "100000";
+    document.getElementById("cAmount").value = "120000";
     calcCashout();
   }
 
@@ -1321,13 +1324,11 @@
     document.getElementById("pConclusion").classList.remove("active");
   }
 
-  /* UPDATE: BERSIHKAN HASIL SEKARANG JUGA MENGHAPUS RIWAYAT */
+  /* BERSYARAT MENGHAPUS RIWAYAT JUGA */
   function clearResult() {
     setResult(0, 0, 0, 0, "Belum dihitung", "");
     document.getElementById("pConclusion").classList.remove("active");
-    // Hapus data array riwayat
     historyData = [];
-    // Render ulang tampilan riwayat agar jadi kosong
     renderHistory();
   }
 
