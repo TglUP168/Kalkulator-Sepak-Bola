@@ -604,7 +604,7 @@
       line-height:1.55;
     }
 
-    /* KOTAK KESIMPULAN HITAM SESUAI GAMBAR */
+    /* KOTAK KESIMPULAN SIDEBAR */
     .conclusion-box {
       margin-top: 15px;
       padding: 20px;
@@ -971,7 +971,7 @@
               <div class="con-label">DETAIL PERHITUNGAN</div>
               <div id="conTitle" class="con-title">Parlay Menang</div>
               <div id="conDetails" class="con-details"></div>
-              <!-- AREA MATEMATIKA -->
+              <!-- AREA MATEMATIKA DETAIL -->
               <div id="conMath" class="con-math-row"></div>
             </div>
             
@@ -1229,7 +1229,6 @@
     setResult(stake, payoutMultiplier, payout, profit, status, "");
     addHistory("Parlay", stake, payout, profit);
 
-    // KESIMPULAN DETAIL SIDEBAR
     const conBox = document.getElementById("pConclusion");
     conBox.classList.add("active");
     
@@ -1242,7 +1241,6 @@
       ${matchFormulaStrings.join("<br>")}
     `;
 
-    // AREA MATEMATIKA DETAIL (RANTAI PERHITUNGAN)
     const mathBox = document.getElementById("conMath");
     if(lose) {
       mathBox.innerHTML = "Tiket Kalah. Total Odds Efektif menjadi 0. Payout = Rp 0";
@@ -1323,9 +1321,14 @@
     document.getElementById("pConclusion").classList.remove("active");
   }
 
+  /* UPDATE: BERSIHKAN HASIL SEKARANG JUGA MENGHAPUS RIWAYAT */
   function clearResult() {
     setResult(0, 0, 0, 0, "Belum dihitung", "");
     document.getElementById("pConclusion").classList.remove("active");
+    // Hapus data array riwayat
+    historyData = [];
+    // Render ulang tampilan riwayat agar jadi kosong
+    renderHistory();
   }
 
   resetParlay();
