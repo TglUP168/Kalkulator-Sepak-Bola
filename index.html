@@ -13,9 +13,6 @@
       --gold1:#eaffb8;
       --gold2:#7ee000;
       --gold3:#38a000;
-      --neon-cyan: #00f2ff;
-      --neon-lime: #7ee000;
-      --hijau-toska: #00e5ff; /* Warna Hijau Toska sesuai permintaan */
       --white:rgba(255,255,255,0.92);
       --soft-white:rgba(255,255,255,0.14);
       --soft-white-2:rgba(255,255,255,0.10);
@@ -29,6 +26,10 @@
       --blue:#b7ff5c;
       --shadow:0 18px 45px rgba(0,0,0,0.28);
       --glass-blur: blur(18px);
+      /* Warna Neon */
+      --neon-cyan: #00f2ff;
+      --neon-red: #ff3131;
+      --hijau-toska: #00e5ff;
     }
 
     body{
@@ -48,16 +49,16 @@
       to { transform: rotate(360deg); }
     }
 
-    /* Animasi Hilang Timbul Hijau Toska (Breathing Effect) */
+    /* Animasi Hilang Timbul Hijau Toska */
     @keyframes hilangTimbulToska {
-      0%, 100% { 
-        box-shadow: 0 0 10px var(--hijau-toska); 
-        opacity: 1; 
-      }
-      50% { 
-        box-shadow: 0 0 35px var(--hijau-toska), 0 0 60px rgba(0, 229, 255, 0.4); 
-        opacity: 0.8; 
-      }
+      0%, 100% { box-shadow: 0 0 10px var(--hijau-toska); opacity: 1; }
+      50% { box-shadow: 0 0 35px var(--hijau-toska), 0 0 60px rgba(0, 229, 255, 0.4); opacity: 0.8; }
+    }
+
+    /* Animasi Hilang Timbul Merah */
+    @keyframes hilangTimbulRed {
+      0%, 100% { box-shadow: 0 0 5px var(--neon-red); background: rgba(255, 49, 49, 0.15); opacity: 1; }
+      50% { box-shadow: 0 0 25px var(--neon-red), 0 0 45px rgba(255, 49, 49, 0.3); background: rgba(255, 49, 49, 0.4); opacity: 0.9; }
     }
 
     .page{
@@ -207,7 +208,7 @@
       background:rgba(255,255,255,0.10);
       backdrop-filter: blur(12px);
       box-shadow:0 10px 24px rgba(0,0,0,.12);
-      transition:.22s ease;
+      transition:.18s ease;
     }
 
     .nav-grid button:hover{
@@ -215,10 +216,9 @@
       background:rgba(255,255,255,0.15);
     }
 
-    /* TOMBOL AKTIF DENGAN EFEK HILANG TIMBUL HIJAU TOSKA */
+    /* Tab Menu Aktif Toska Hilang Timbul */
     .nav-grid button.active{
       color:#000;
-      font-weight: 800;
       background: var(--hijau-toska);
       border-color: var(--hijau-toska);
       animation: hilangTimbulToska 2.5s infinite ease-in-out;
@@ -231,10 +231,10 @@
       align-items:start;
     }
 
-    /* GLASS CARD DENGAN LAMPU NEON BERGERAK DI TEPI */
+    /* KOTAK GLASS DENGAN NEON KELILING */
     .glass-card{
       position: relative;
-      background:rgba(255,255,255,0.12);
+      background: rgba(3, 22, 14, 0.94); 
       backdrop-filter: var(--glass-blur);
       -webkit-backdrop-filter: var(--glass-blur);
       border-radius:28px;
@@ -243,40 +243,19 @@
       border: 1px solid rgba(255,255,255,0.1);
     }
 
-    /* Lapisan Lampu yang berputar di tepi samping */
     .glass-card::before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: conic-gradient(
-        transparent, 
-        var(--neon-cyan), 
-        transparent 20%, 
-        transparent 50%, 
-        var(--neon-lime), 
-        transparent 70%
-      );
-      animation: neonRotate 4s linear infinite;
-      z-index: 0;
+      content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: conic-gradient(transparent, var(--neon-cyan), transparent 20%, transparent 50%, var(--gold2), transparent 70%);
+      animation: neonRotate 5s linear infinite; z-index: 0;
     }
 
-    /* Penutup tengah agar lampu hanya terlihat di samping (border) */
     .glass-card::after {
-      content: "";
-      position: absolute;
-      inset: 3px; 
-      background: rgba(3, 22, 14, 0.96);
-      border-radius: 25px;
-      z-index: 1;
+      content: ""; position: absolute; inset: 2px; background: rgba(3, 22, 14, 1); 
+      border-radius: 26px; z-index: 1;
     }
 
     .card-body{
-      position: relative;
-      z-index: 2;
-      padding:22px;
+      position: relative; z-index: 2; padding:22px;
     }
 
     .panel{ display:none; }
@@ -320,8 +299,8 @@
     }
 
     .guide{
-      background:rgba(255,255,255,0.11);
-      border:1px solid rgba(184,255,92,0.32);
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(184,255,92,0.22);
       border-radius:22px;
       padding:18px;
       margin-bottom:18px;
@@ -353,8 +332,8 @@
       font-size:12px;
       font-weight:700;
       color:#fff8de;
-      background:rgba(255,255,255,0.12);
-      border:1px solid rgba(255,255,255,0.16);
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.12);
       padding:8px 12px;
       border-radius:999px;
     }
@@ -366,8 +345,8 @@
     }
 
     .mini-card{
-      background:rgba(255,255,255,0.09);
-      border:1px solid rgba(255,255,255,0.16);
+      background:rgba(0,0,0,0.2);
+      border:1px solid rgba(255,255,255,0.08);
       border-radius:16px;
       padding:14px;
       backdrop-filter: blur(10px);
@@ -395,8 +374,8 @@
 
     .easy-box{
       margin-top:14px;
-      background:rgba(126,224,0,0.16);
-      border:1px solid rgba(184,255,92,0.46);
+      background:rgba(126,224,0,0.12);
+      border:1px solid rgba(184,255,92,0.3);
       color:#eaffef;
       border-radius:16px;
       padding:14px;
@@ -407,8 +386,8 @@
     }
 
     .input-area{
-      background:rgba(255,255,255,0.08);
-      border:1px solid rgba(255,255,255,0.16);
+      background:rgba(0,0,0,0.25);
+      border:1px solid rgba(255,255,255,0.1);
       border-radius:22px;
       padding:18px;
       backdrop-filter: blur(10px);
@@ -429,30 +408,24 @@
       color:#fff7e5;
     }
 
+    /* KOLOM LATAR HILANG (TRANSPARENT) Bre */
     input, select{
       width:100%;
       padding:14px 14px;
-      border:1.6px solid rgba(255,255,255,0.20);
+      border:1.6px solid rgba(255,255,255,0.15);
       border-radius:15px;
-      background:rgba(255,255,255,0.10);
+      background: transparent; 
       color:#ffffff;
       font-size:16px;
       outline:none;
-      backdrop-filter: blur(8px);
+      transition: .3s;
     }
 
-    input::placeholder{
-      color:rgba(255,255,255,0.68);
-    }
-
-    select option{
-      color:#111827;
-    }
+    select option { background: #03160e; color: #fff; }
 
     input:focus, select:focus{
-      border-color:rgba(126,224,0,0.72);
-      box-shadow:0 0 0 4px rgba(126,224,0,.16);
-      background:rgba(255,255,255,0.14);
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 15px var(--neon-cyan);
     }
 
     .help{
@@ -492,8 +465,20 @@
 
     .secondary{
       color:#fff8e3;
-      background:rgba(255,255,255,0.09);
-      border:1px solid rgba(255,255,255,0.18);
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12);
+    }
+
+    /* TOMBOL RESET / BERSIHKAN MERAH HILANG TIMBUL Bre */
+    .btn-reset-neon {
+      color:#fff !important;
+      background:rgba(255, 49, 49, 0.15);
+      border:1px solid var(--neon-red) !important;
+      border-radius:14px; padding:13px 16px; 
+      font-family:'Poppins', sans-serif;
+      font-weight:700; font-size:14px;
+      cursor:pointer;
+      animation: hilangTimbulRed 2.5s infinite ease-in-out;
     }
 
     .danger{
@@ -503,8 +488,8 @@
 
     .explain{
       margin-top:14px;
-      background:rgba(255,255,255,0.08);
-      border:1px solid rgba(255,255,255,0.16);
+      background:rgba(0,0,0,0.2);
+      border:1px solid rgba(255,255,255,0.08);
       color:#fff7e0;
       border-radius:15px;
       padding:13px 14px;
@@ -517,12 +502,11 @@
       grid-template-columns:1fr 1fr 50px;
       gap:10px;
       align-items:end;
-      background:rgba(255,255,255,0.08);
-      border:1px solid rgba(255,255,255,0.16);
+      background:rgba(0,0,0,0.2);
+      border:1px solid rgba(255,255,255,0.08);
       border-radius:16px;
       padding:12px;
       margin-bottom:10px;
-      backdrop-filter: blur(8px);
     }
 
     .side-card{
@@ -535,14 +519,14 @@
       align-items:center;
       gap:12px;
       padding-bottom:16px;
-      border-bottom:1px solid rgba(255,255,255,0.16);
+      border-bottom:1px solid rgba(255,255,255,0.1);
       margin-bottom:16px;
     }
 
     .brand-side img{
       height:52px;
       width:auto;
-      filter:drop-shadow(0 8px 20px rgba(0,0,0,.3));
+      filter:drop-shadow(0 0 10px var(--neon-cyan));
     }
 
     .brand-side h3{
@@ -561,7 +545,7 @@
     }
 
     .result-box{
-      background:rgba(0,0,0,0.3);
+      background:rgba(0,0,0,0.4);
       border:1px solid rgba(255,255,255,0.1);
       border-radius:20px;
       padding:16px;
@@ -569,7 +553,7 @@
     }
 
     .result-label{
-      color:#f7e7bc;
+      color: var(--neon-cyan);
       font-size:12px;
       font-weight:800;
       text-transform:uppercase;
@@ -585,11 +569,10 @@
       line-height:1.15;
       word-break:break-word;
       color:#fff;
-      text-shadow:0 3px 10px rgba(0,0,0,.12);
     }
 
-    .blue{ color:#b7ff5c; }
-    .green{ color:#86efac; }
+    .blue{ color: var(--neon-cyan); }
+    .green{ color: var(--neon-lime); }
     .redtxt{ color:#fca5a5; }
     .gray{ color:#f8fafc; }
 
@@ -602,8 +585,8 @@
     }
 
     .history-item{
-      background:rgba(255,255,255,0.08);
-      border:1px solid rgba(255,255,255,0.16);
+      background:rgba(0,0,0,0.2);
+      border:1px solid rgba(255,255,255,0.05);
       border-radius:14px;
       padding:12px;
       margin-top:10px;
@@ -626,22 +609,11 @@
     @media (max-width:980px){
       .layout{ grid-template-columns:1fr; }
       .side-card{ position:static; }
-      .hero-steps{ grid-template-columns:1fr 1fr; }
-      .nav-grid{ grid-template-columns:1fr 1fr; }
-      .guide-grid{ grid-template-columns:1fr; }
+      .hero-steps, .nav-grid, .guide-grid{ grid-template-columns:1fr 1fr; }
     }
 
     @media (max-width:640px){
-      .page{ padding:14px; }
-      .hero{ padding:18px; }
-      .hero h1{ font-size:24px; }
-      .hero-steps{ grid-template-columns:1fr; }
-      .nav-grid{ grid-template-columns:1fr; }
-      .form-grid{ grid-template-columns:1fr; }
-      .match{ grid-template-columns:1fr; }
-      .logo-wrap img{ height:62px; }
-      .panel-head h2{ font-size:23px; }
-      .result-value{ font-size:27px; }
+      .hero-steps, .nav-grid, .form-grid, .match{ grid-template-columns:1fr; }
     }
   </style>
 </head>
@@ -690,7 +662,6 @@
     </div>
 
     <div class="layout">
-      <!-- KOTAK UTAMA DENGAN NEON BERJALAN DI TEPI -->
       <div class="glass-card">
         <div class="card-body">
 
@@ -765,7 +736,7 @@
               <div class="action">
                 <button class="primary" onclick="calcSingle()">Hitung</button>
                 <button class="secondary" onclick="exampleSingle()">Contoh</button>
-                <button class="secondary" onclick="resetSingle()">Reset</button>
+                <button class="btn-reset-neon" onclick="resetSingle()">Reset</button>
               </div>
             </div>
           </div>
@@ -815,7 +786,7 @@
                 <button class="secondary" onclick="addMatch()">+ Tambah Match</button>
                 <button class="primary" onclick="calcParlay()">Hitung</button>
                 <button class="secondary" onclick="exampleParlay()">Contoh</button>
-                <button class="secondary" onclick="resetParlay()">Reset</button>
+                <button class="btn-reset-neon" onclick="resetParlay()">Reset</button>
               </div>
 
               <div class="explain">Catatan: kalau ada 1 match kalah, tiket parlay kalah. Kalau void, odds match itu dianggap 1.00.</div>
@@ -872,7 +843,7 @@
               <div class="action">
                 <button class="primary" onclick="calcTarget()">Hitung Modal</button>
                 <button class="secondary" onclick="exampleTarget()">Contoh</button>
-                <button class="secondary" onclick="resetTarget()">Reset</button>
+                <button class="btn-reset-neon" onclick="resetTarget()">Reset</button>
               </div>
 
               <div class="explain">Rumus mudah: modal = target profit ÷ (odds - 1).</div>
@@ -929,7 +900,7 @@
               <div class="action">
                 <button class="primary" onclick="calcCashout()">Hitung</button>
                 <button class="secondary" onclick="exampleCashout()">Contoh</button>
-                <button class="secondary" onclick="resetCashout()">Reset</button>
+                <button class="btn-reset-neon" onclick="resetCashout()">Reset</button>
               </div>
 
               <div class="explain">Profit / loss = nominal cash out - modal.</div>
@@ -976,7 +947,7 @@
           </div>
 
           <div class="action">
-            <button class="secondary" style="width:100%" onclick="clearResult()">Bersihkan Hasil</button>
+            <button class="btn-reset-neon" style="width:100%" onclick="clearResult()">Bersihkan Hasil</button>
           </div>
 
           <div class="history-title">Riwayat Terakhir</div>
@@ -991,7 +962,7 @@
   </div>
 
 <script>
-  /* KODE LOGIKA JAVASCRIPT ASLI ANDA 100% */
+  /* JAVASCRIPT ASLI ENTE 100% Bre */
   let history = [];
   let matchNo = 0;
 
@@ -1161,7 +1132,7 @@
           <option value="halflost" ${result === "halflost" ? "selected" : ""}>Half Lose</option>
         </select>
       </div>
-      <button class="danger" onclick="this.parentElement.remove()">X</button>
+      <button class="btn-reset-neon" onclick="this.parentElement.remove()" style="padding:10px 15px; margin-top:28px;">X</button>
     `;
     document.getElementById("matchList").appendChild(div);
   }
