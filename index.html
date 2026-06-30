@@ -687,6 +687,7 @@
       <div class="glass-card">
         <div class="card-body">
 
+          <!-- PANEL 1: SINGLE BET -->
           <div id="single" class="panel active">
             <div class="panel-head">
               <div class="panel-badge">1</div>
@@ -697,30 +698,27 @@
             <div class="guide">
               <div class="guide-top">
                 <div class="guide-label">Arahan Single Bet</div>
-                <div class="guide-tag">Paling cocok untuk 1 tiket</div>
+                <div class="guide-tag">Support Odds Minus (-)</div>
               </div>
               <div class="guide-grid">
                 <div class="mini-card">
-                  <h3>Apa itu?</h3>
-                  <p>Anda hanya memasang taruhan pada 1 pertandingan atau 1 pilihan.</p>
+                  <h3>Cara Kerja</h3>
+                  <p>Anda memasang pada 1 pertandingan. Mendukung Odds Desimal (1.80) dan Odds Minus/Indo (-1.25).</p>
                 </div>
                 <div class="mini-card">
-                  <h3>Apa yang dihitung?</h3>
-                  <ul>
-                    <li>Uang yang diterima jika menang.</li>
-                    <li>Keuntungan bersih yang didapat.</li>
-                  </ul>
+                  <h3>Logika Odds (-)</h3>
+                  <p>Odds minus berarti ada Pajak/Kei. Rumus: 1 + (1 / |Odds|). Payout = Modal + (Modal / |Odds|).</p>
                 </div>
                 <div class="mini-card">
-                  <h3>Contoh</h3>
-                  <p>Modal: Rp100.000<br>Odds: 1.80<br><br>Uang diterima: Rp180.000<br>Keuntungan: Rp80.000</p>
+                  <h3>Contoh Minus</h3>
+                  <p>Modal: 100k, Odds: -1.25.<br>Konversi: 1.800.<br>Terima: 180k.<br>Untung: 80k.</p>
                 </div>
                 <div class="mini-card">
-                  <h3>Rumus Cepat</h3>
-                  <p>Payout = Modal × Odds<br>Profit = Payout - Modal</p>
+                  <h3>Rantai Hasil</h3>
+                  <p>Sistem akan memecah: Konversi Odds → Perkalian Modal → Untung Bersih.</p>
                 </div>
               </div>
-              <div class="easy-box">Mudahnya: masukkan modal dan odds, lalu kalkulator akan menghitung berapa uang yang akan Anda terima jika taruhan menang.</div>
+              <div class="easy-box">Sangat praktis untuk menghitung berapa bersih yang Anda terima jika menang odds minus.</div>
             </div>
 
             <div class="input-area">
@@ -732,8 +730,8 @@
                 </div>
                 <div>
                   <label>Odds</label>
-                  <input id="sOdds" placeholder="Contoh: 1.80">
-                  <div class="help">Contoh odds decimal: 1.80 / 1.95 / 2.10</div>
+                  <input id="sOdds" placeholder="Contoh: 1.80 atau -1.25">
+                  <div class="help">Gunakan tanda minus (-) untuk Odds Indo.</div>
                 </div>
               </div>
 
@@ -763,6 +761,7 @@
             </div>
           </div>
 
+          <!-- PANEL 2: PARLAY -->
           <div id="parlay" class="panel">
             <div class="panel-head">
               <div class="panel-badge">2</div>
@@ -773,30 +772,27 @@
             <div class="guide">
               <div class="guide-top">
                 <div class="guide-label">Arahan Parlay</div>
-                <div class="guide-tag">Semua pilihan harus benar</div>
+                <div class="guide-tag">Semua Match Harus Benar</div>
               </div>
               <div class="guide-grid">
                 <div class="mini-card">
-                  <h3>Apa itu?</h3>
-                  <p>Anda menggabungkan 2 atau lebih taruhan menjadi satu tiket. Semua pilihan harus benar agar tiket menang.</p>
+                  <h3>Logika Mix</h3>
+                  <p>Mendukung campuran Odds Desimal dan Minus. Odds minus otomatis dikonversi per-match.</p>
                 </div>
                 <div class="mini-card">
-                  <h3>Apa yang dihitung?</h3>
-                  <ul>
-                    <li>Total odds gabungan.</li>
-                    <li>Total uang yang diterima jika semua menang.</li>
-                  </ul>
+                  <h3>Half Win/Lose</h3>
+                  <p>Half Win: ((Odds-1)/2)+1. Half Lose: Perkalian total odds dikali 0.5.</p>
                 </div>
                 <div class="mini-card">
-                  <h3>Contoh</h3>
-                  <p>Odds 1: 1.80<br>Odds 2: 2.00<br>Odds 3: 1.50<br><br>Total odds = 5.40<br>Modal Rp100.000 → Payout Rp540.000<br>Profit Rp440.000</p>
+                  <h3>Syarat Menang</h3>
+                  <p>Jika ada 1 match kalah total, maka seluruh tiket parlay dianggap hangus (payout 0).</p>
                 </div>
                 <div class="mini-card">
-                  <h3>Rumus Cepat</h3>
-                  <p>Total Odds = odds1 × odds2 × odds3 ...<br>Payout = Modal × Total Odds</p>
+                  <h3>Rantai Duit</h3>
+                  <p>Step: Total Multiplier → Payout (Modal x Total Odds) → Untung Bersih.</p>
                 </div>
               </div>
-              <div class="easy-box">Mudahnya: masukkan semua odds pertandingan, lalu kalkulator akan menghitung total odds dan potensi kemenangan.</div>
+              <div class="easy-box">Pastikan memasukkan semua odds dengan benar. Hasil akan menampilkan detail per-match.</div>
             </div>
 
             <div class="input-area">
@@ -811,50 +807,49 @@
                 <button class="btn-reset-neon" onclick="resetParlay()">Reset</button>
               </div>
 
-              <div class="explain">Catatan: kalau ada 1 match kalah, tiket parlay kalah. Kalau void, odds match itu dianggap 1.00.</div>
+              <div class="explain">Catatan: kalau ada 1 match kalah, tiket parlay kalah.</div>
             </div>
           </div>
 
+          <!-- PANEL 3: TARGET PROFIT -->
           <div id="target" class="panel">
             <div class="panel-head">
               <div class="panel-badge">3</div>
               <h2>Target Profit (KEI)</h2>
             </div>
-            <p class="subtitle">Untuk mengetahui berapa modal yang perlu dipasang agar profit sesuai target.</p>
+            <p class="subtitle">Hitung modal yang dibutuhkan untuk menang nominal tertentu.</p>
 
             <div class="guide">
               <div class="guide-top">
                 <div class="guide-label">Arahan Target Profit</div>
-                <div class="guide-tag">Cocok untuk hitung modal</div>
+                <div class="guide-tag">Menentukan Modal</div>
               </div>
               <div class="guide-grid">
                 <div class="mini-card">
-                  <h3>Apa itu?</h3>
-                  <p>Dipakai jika Anda sudah menentukan ingin untung berapa, tetapi belum tahu harus memasang modal berapa.</p>
+                  <h3>Tujuan</h3>
+                  <p>Digunakan jika Anda ingin untung bersih Rp 500k, tapi tidak tahu harus pasang berapa.</p>
                 </div>
                 <div class="mini-card">
-                  <h3>Apa yang dihitung?</h3>
-                  <ul>
-                    <li>Modal yang harus dipasang agar keuntungan sesuai target.</li>
-                  </ul>
+                  <h3>Pajak (Kei)</h3>
+                  <p>Jika Odds Minus, modal harus lebih besar dari target profit. Sistem akan menghitung pajaknya.</p>
                 </div>
                 <div class="mini-card">
-                  <h3>Contoh</h3>
-                  <p>Odds: 1.85<br>Ingin untung: Rp100.000<br><br>Modal = Rp117.647<br>Total diterima = Rp217.647<br>Profit bersih = Rp100.000</p>
+                  <h3>Rumus</h3>
+                  <p>Modal = Target / (Odds Konversi - 1). Hasil akurat hingga digit terakhir.</p>
                 </div>
                 <div class="mini-card">
-                  <h3>Rumus Cepat</h3>
-                  <p>Modal = Target Profit ÷ (Odds - 1)</p>
+                  <h3>Detail Hasil</h3>
+                  <p>Akan muncul rincian: Odds Konversi → Multiplier Untung → Kebutuhan Modal Akhir.</p>
                 </div>
               </div>
-              <div class="easy-box">Mudahnya: masukkan target keuntungan dan odds, lalu kalkulator akan menghitung berapa modal yang perlu dipasang.</div>
+              <div class="easy-box">Sangat membantu bagi pemain yang ingin menang "angka bulat" (misal: pas menang beli pulsa/rokok).</div>
             </div>
 
             <div class="input-area">
               <div class="form-grid">
                 <div>
                   <label>Odds</label>
-                  <input id="tOdds" placeholder="Contoh: 1.85">
+                  <input id="tOdds" placeholder="Contoh: 1.85 atau -1.25">
                 </div>
                 <div>
                   <label>Target Profit</label>
@@ -868,43 +863,33 @@
                 <button class="btn-reset-neon" onclick="resetTarget()">Reset</button>
               </div>
 
-              <div class="explain">Rumus mudah: modal = target profit ÷ (odds - 1).</div>
+              <div class="explain">Rumus: Modal = Target / (Odds Konversi - 1).</div>
             </div>
           </div>
 
+          <!-- PANEL 4: CASH OUT -->
           <div id="cashout" class="panel">
             <div class="panel-head">
               <div class="panel-badge">4</div>
               <h2>Cash Out</h2>
             </div>
-            <p class="subtitle">Untuk menghitung untung, rugi, atau impas saat menerima penawaran cash out.</p>
+            <p class="subtitle">Hitung untung rugi saat tarik taruhan lebih awal.</p>
 
             <div class="guide">
               <div class="guide-top">
                 <div class="guide-label">Arahan Cash Out</div>
-                <div class="guide-tag">Untuk tutup taruhan lebih awal</div>
+                <div class="guide-tag">Tarik Dana Cepat</div>
               </div>
               <div class="guide-grid">
                 <div class="mini-card">
-                  <h3>Apa itu?</h3>
-                  <p>Digunakan ketika bandar menawarkan untuk menutup taruhan sebelum pertandingan selesai.</p>
+                  <h3>Cara Pakai</h3>
+                  <p>Masukkan modal awal tiket Anda, lalu masukkan nominal yang ditawarkan bandar di aplikasi.</p>
                 </div>
                 <div class="mini-card">
-                  <h3>Apa yang dihitung?</h3>
-                  <ul>
-                    <li>Apakah Anda untung, rugi, atau kembali modal jika menerima cash out.</li>
-                  </ul>
-                </div>
-                <div class="mini-card">
-                  <h3>Contoh</h3>
-                  <p>Modal Rp100.000<br><br>Cash Out Rp120.000 → Untung Rp20.000<br>Cash Out Rp100.000 → Balik modal<br>Cash Out Rp80.000 → Rugi Rp20.000</p>
-                </div>
-                <div class="mini-card">
-                  <h3>Rumus Cepat</h3>
-                  <p>Profit / Loss = Nominal Cash Out - Modal</p>
+                  <h3>Hasil</h3>
+                  <p>Profit: Jika tawaran > modal. Rugi: Jika tawaran < modal. Impas: Jika sama.</p>
                 </div>
               </div>
-              <div class="easy-box">Mudahnya: masukkan modal dan nilai cash out yang ditawarkan, lalu kalkulator akan menunjukkan apakah Anda untung, rugi, atau impas.</div>
             </div>
 
             <div class="input-area">
@@ -924,21 +909,20 @@
                 <button class="secondary" onclick="exampleCashout()">Contoh</button>
                 <button class="btn-reset-neon" onclick="resetCashout()">Reset</button>
               </div>
-
-              <div class="explain">Profit / loss = nominal cash out - modal.</div>
             </div>
           </div>
 
         </div>
       </div>
 
+      <!-- SIDEBAR HASIL -->
       <div class="glass-card side-card">
         <div class="card-body">
           <div class="brand-side">
             <img src="https://cdn.areabermain.club/assets/cdn/az5/2026/05/29/20260529/891d078dfb7eafea9e076c4e6a0c8d44/togelup-togel-hijau-transparan-clean.png" alt="TogelUp Logo">
             <div>
               <h3>Panel Hasil</h3>
-              <p>Semua hasil perhitungan akan muncul di sini.</p>
+              <p>Rincian alur dana Anda muncul di sini.</p>
             </div>
           </div>
 
@@ -966,12 +950,10 @@
             <div class="result-label">Kesimpulan</div>
             <div id="rStatus" class="result-value gray">Belum dihitung</div>
             
-            <!-- KESIMPULAN SIDEBAR -->
             <div id="pConclusion" class="conclusion-box">
-              <div class="con-label">DETAIL PERHITUNGAN</div>
-              <div id="conTitle" class="con-title">Parlay Menang</div>
+              <div class="con-label">DETAIL RANTAI PERHITUNGAN</div>
+              <div id="conTitle" class="con-title">Hasil Hitung</div>
               <div id="conDetails" class="con-details"></div>
-              <!-- AREA MATEMATIKA DETAIL -->
               <div id="conMath" class="con-math-row"></div>
             </div>
             
@@ -994,7 +976,6 @@
   </div>
 
 <script>
-  /* JAVASCRIPT ASLI ANDA - 100% UTUH SESUAI PERMINTAAN */
   let historyData = [];
   let matchNo = 0;
 
@@ -1007,11 +988,19 @@
       v = v.replace(",", ".");
     } else {
       const p = v.split(".");
-      if (p.length > 2) v = v.replace(/\./g, "");
-      else if (p.length === 2 && p[1].length === 3) v = v.replace(/\./g, "");
+      if (p.length > 2 || (p.length === 2 && p[1].length === 3)) {
+        v = v.replace(/\./g, "");
+      }
     }
     const n = parseFloat(v);
     return isNaN(n) ? 0 : n;
+  }
+
+  function convertOdds(o) {
+    if (o < 0) {
+      return 1 + (1 / Math.abs(o));
+    }
+    return o;
   }
 
   function rp(v) {
@@ -1064,7 +1053,7 @@
     document.querySelectorAll(".nav-grid button").forEach(b => b.classList.remove("active"));
     document.getElementById(id).classList.add("active");
     btn.classList.add("active");
-    if(id !== 'parlay') document.getElementById("pConclusion").classList.remove("active");
+    document.getElementById("pConclusion").classList.remove("active");
   }
 
   function toggleCashInput() {
@@ -1075,7 +1064,7 @@
   function explainSingle() {
     const val = document.getElementById("sResult").value;
     const text = {
-      win: "Menang = payout dihitung dari modal × odds.",
+      win: "Menang = payout dihitung dari modal × odds konversi.",
       lose: "Kalah = payout 0, modal hangus.",
       void: "Void / refund = modal dikembalikan penuh.",
       halfwin: "Half win = setengah modal menang, setengah modal refund.",
@@ -1087,66 +1076,47 @@
 
   function calcSingle() {
     const stake = num(document.getElementById("sStake").value);
-    const odds = num(document.getElementById("sOdds").value);
+    const rawOdds = num(document.getElementById("sOdds").value);
     const result = document.getElementById("sResult").value;
     const cash = num(document.getElementById("sCash").value);
 
-    if (stake <= 0) return alert("Modal belum diisi dengan benar.");
-    if (result !== "cashout" && odds <= 1) return alert("Odds harus lebih dari 1. Contoh: 1.80");
-    if (result === "cashout" && cash <= 0) return alert("Nominal cash out belum diisi.");
+    if (stake <= 0) return alert("Modal belum diisi.");
+    if (result !== "cashout" && rawOdds === 0) return alert("Odds tidak boleh 0.");
 
-    let payout = 0, status = "", desc = "";
-    document.getElementById("pConclusion").classList.remove("active");
+    const odds = convertOdds(rawOdds);
+    let payout = 0, status = "";
+    let mathChain = "";
 
     if (result === "win") {
       payout = stake * odds;
-      status = "Tiket Menang";
-      desc = "Payout = modal × odds.";
+      status = "Single Menang";
+      let logicStr = rawOdds < 0 ? `Odds Minus (${rawOdds}) Konversi: 1+(1/${Math.abs(rawOdds)}) = <b>${odds.toFixed(3)}</b>` : `Odds Desimal (${rawOdds})`;
+      mathChain = `${logicStr}<br><br><b>STEP 1 (Payout):</b> ${rp(stake)} x ${odds.toFixed(3)} = <b>${rp(payout)}</b><br><b>STEP 2 (Profit):</b> ${rp(payout)} - ${rp(stake)} = <b>${rp(payout-stake)}</b> (Untung Bersih)`;
     } else if (result === "lose") {
-      payout = 0;
-      status = "Tiket Kalah";
-      desc = "Modal hangus.";
+      payout = 0; status = "Single Kalah";
+      mathChain = `Modal <b>${rp(stake)}</b> hangus.`;
     } else if (result === "void") {
-      payout = stake;
-      status = "Void / Refund";
-      desc = "Modal kembali penuh.";
+      payout = stake; status = "Void / Refund";
+      mathChain = `Modal kembali <b>${rp(stake)}</b>.`;
     } else if (result === "halfwin") {
-      payout = (stake / 2 * odds) + (stake / 2);
-      status = "Half Win";
-      desc = "Setengah menang, setengah refund.";
+      payout = (stake / 2 * odds) + (stake / 2); status = "Half Win";
+      mathChain = `1. Menang Setengah: ${rp(stake/2)} x ${odds.toFixed(3)} = ${rp(stake/2*odds)}<br>2. Refund Setengah: ${rp(stake/2)}<br>3. Total Payout: <b>${rp(payout)}</b>`;
     } else if (result === "halflost") {
-      payout = stake / 2;
-      status = "Half Lose";
-      desc = "Setengah kalah, setengah refund.";
+      payout = stake / 2; status = "Half Lose";
+      mathChain = `Hasil: Kalah Setengah. Sisa modal refund: <b>${rp(payout)}</b>.`;
     } else if (result === "cashout") {
-      payout = cash;
-      status = "Cash Out";
-      desc = "Yang diterima sesuai nominal cash out.";
+      payout = cash; status = "Cash Out";
+      mathChain = `Diterima dari bandar: <b>${rp(payout)}</b>.`;
     }
 
     const profit = payout - stake;
-    setResult(stake, result === "cashout" ? 0 : odds, payout, profit, status, desc);
+    setResult(stake, odds, payout, profit, status, "");
     addHistory("Single Bet", stake, payout, profit);
-  }
-
-  /* KEMBALIKAN CONTOH SINGLE */
-  function exampleSingle() {
-    document.getElementById("sStake").value = "100000";
-    document.getElementById("sOdds").value = "1.80";
-    document.getElementById("sResult").value = "win";
-    toggleCashInput();
-    explainSingle();
-    calcSingle();
-  }
-
-  function resetSingle() {
-    document.getElementById("sStake").value = "";
-    document.getElementById("sOdds").value = "";
-    document.getElementById("sCash").value = "";
-    document.getElementById("sResult").value = "win";
-    toggleCashInput();
-    explainSingle();
-    document.getElementById("pConclusion").classList.remove("active");
+    const conBox = document.getElementById("pConclusion");
+    conBox.classList.add("active");
+    document.getElementById("conTitle").textContent = status;
+    document.getElementById("conDetails").innerHTML = "Rincian alur hitungan:";
+    document.getElementById("conMath").innerHTML = mathChain;
   }
 
   function addMatch(odds = "", result = "win") {
@@ -1154,187 +1124,67 @@
     const div = document.createElement("div");
     div.className = "match";
     div.innerHTML = `
-      <div>
-        <label>Odds Match ${matchNo}</label>
-        <input class="mOdds" placeholder="Contoh: 1.80" value="${odds}">
-      </div>
-      <div>
-        <label>Hasil</label>
-        <select class="mResult">
+      <div><label>Odds Match ${matchNo}</label><input class="mOdds" placeholder="1.80 atau -1.25" value="${odds}"></div>
+      <div><label>Hasil</label><select class="mResult">
           <option value="win" ${result === "win" ? "selected" : ""}>Menang</option>
           <option value="lose" ${result === "lose" ? "selected" : ""}>Kalah</option>
           <option value="void" ${result === "void" ? "selected" : ""}>Void</option>
           <option value="halfwin" ${result === "halfwin" ? "selected" : ""}>Half Win</option>
           <option value="halflost" ${result === "halflost" ? "selected" : ""}>Half Lose</option>
-        </select>
-      </div>
-      <button class="btn-reset-neon" onclick="this.parentElement.remove()" style="padding:10px 15px; margin-top:28px;">X</button>
-    `;
+        </select></div>
+      <button class="btn-reset-neon" onclick="this.parentElement.remove()" style="padding:10px 15px; margin-top:28px;">X</button>`;
     document.getElementById("matchList").appendChild(div);
   }
 
   function calcParlay() {
     const stake = num(document.getElementById("pStake").value);
-    if (stake <= 0) return alert("Modal belum diisi dengan benar.");
-
+    if (stake <= 0) return alert("Modal belum diisi.");
     const oddsEls = document.querySelectorAll(".mOdds");
     const resultEls = document.querySelectorAll(".mResult");
     if (!oddsEls.length) return alert("Tambahkan minimal 1 match.");
-
-    let totalOddsAsli = 1;
-    let payoutMultiplier = 1;
-    let lose = false;
-    let containsHalfLose = false;
-    let matchFormulaStrings = [];
-    let mathMatchValues = [];
-
+    let payoutMultiplier = 1; let lose = false; let matchStrings = []; let mathMatchValues = [];
     for (let i = 0; i < oddsEls.length; i++) {
-      const o = num(oddsEls[i].value);
-      const r = resultEls[i].value;
-      const mIdx = i + 1;
-
-      if (r !== "void" && o <= 1) return alert("Odds match " + mIdx + " belum benar.");
-      
-      totalOddsAsli *= o;
-
-      if (r === "win") {
-        payoutMultiplier *= o;
-        matchFormulaStrings.push(`• Match ${mIdx} menang full: <b>${o.toFixed(3)}</b>`);
-        mathMatchValues.push(o.toFixed(3));
-      } else if (r === "lose") {
-        lose = true;
-        matchFormulaStrings.push(`• Match ${mIdx} kalah: <b>Tiket Hangus</b>`);
-        mathMatchValues.push("0.00");
-        break;
-      } else if (r === "void") {
-        payoutMultiplier *= 1;
-        matchFormulaStrings.push(`• Match ${mIdx} void: <b>1.000</b>`);
-        mathMatchValues.push("1.000");
-      } else if (r === "halfwin") {
-        const hwo = ((o - 1) / 2) + 1;
-        payoutMultiplier *= hwo;
-        matchFormulaStrings.push(`• Match ${mIdx} half win: <b>(${o.toFixed(3)} - 1) / 2 + 1 = ${hwo.toFixed(3)}</b>`);
-        mathMatchValues.push(hwo.toFixed(3));
-      } else if (r === "halflost") {
-        payoutMultiplier *= 0.5;
-        containsHalfLose = true;
-        matchFormulaStrings.push(`• Match ${mIdx} half lose: <b>dikali 0.5</b>`);
-        mathMatchValues.push("0.500");
-      }
+      const rawO = num(oddsEls[i].value); const r = resultEls[i].value; const mIdx = i + 1;
+      if (r !== "void" && rawO === 0) return alert("Odds match " + mIdx + " tidak boleh 0.");
+      const o = convertOdds(rawO);
+      if (r === "win") { payoutMultiplier *= o; let info = rawO < 0 ? `(${rawO} -> 1+1/${Math.abs(rawO)}) = ${o.toFixed(3)}` : `${o.toFixed(3)}`;
+        matchStrings.push(`• Match ${mIdx} (Menang): <b>${info}</b>`); mathMatchValues.push(o.toFixed(3));
+      } else if (r === "lose") { lose = true; matchStrings.push(`• Match ${mIdx} (Kalah): <b>Tiket Hangus</b>`); mathMatchValues.push("0"); break;
+      } else if (r === "void") { payoutMultiplier *= 1; matchStrings.push(`• Match ${mIdx} (Void): <b>1.000</b>`); mathMatchValues.push("1.000");
+      } else if (r === "halfwin") { const hwo = ((o - 1) / 2) + 1; payoutMultiplier *= hwo; matchStrings.push(`• Match ${mIdx} (Half Win): <b>${hwo.toFixed(3)}</b>`); mathMatchValues.push(hwo.toFixed(3));
+      } else if (r === "halflost") { payoutMultiplier *= 0.5; matchStrings.push(`• Match ${mIdx} (Half Lose): <b>0.500</b>`); mathMatchValues.push("0.500"); }
     }
-
-    const payout = lose ? 0 : stake * payoutMultiplier;
-    const profit = payout - stake;
-    const status = lose ? "Parlay Kalah" : profit > 0 ? "Parlay Menang" : profit < 0 ? "Loss Sebagian" : "Balik Modal";
-
-    setResult(stake, payoutMultiplier, payout, profit, status, "");
-    addHistory("Parlay", stake, payout, profit);
-
-    const conBox = document.getElementById("pConclusion");
-    conBox.classList.add("active");
-    
-    let conTitleStr = lose ? "Parlay Kalah Total" : "Parlay Menang";
-    if (!lose && containsHalfLose) conTitleStr += " / Ada Half Lose";
-
-    document.getElementById("conTitle").textContent = conTitleStr;
-    document.getElementById("conDetails").innerHTML = `
-      Total odds asli: <b>${totalOddsAsli.toFixed(3)}</b> • Total odds efektif: <b>${payoutMultiplier.toFixed(3)}</b><br><br>
-      ${matchFormulaStrings.join("<br>")}
-    `;
-
+    const payout = lose ? 0 : stake * payoutMultiplier; const profit = payout - stake; const status = lose ? "Parlay Kalah" : profit > 0 ? "Parlay Menang" : "Balik Modal";
+    setResult(stake, payoutMultiplier, payout, profit, status, ""); addHistory("Parlay", stake, payout, profit);
+    const conBox = document.getElementById("pConclusion"); conBox.classList.add("active");
+    document.getElementById("conTitle").textContent = status; document.getElementById("conDetails").innerHTML = matchStrings.join("<br>");
     const mathBox = document.getElementById("conMath");
-    if(lose) {
-      mathBox.innerHTML = "Tiket Kalah. Total Odds Efektif menjadi 0. Payout = Rp 0";
-    } else {
-      mathBox.innerHTML = `
-        RANTAI PERHITUNGAN:<br>
-        1. Total Odds = ${mathMatchValues.join(" x ")} = <b>${payoutMultiplier.toFixed(3)}</b><br>
-        2. Payout = ${rp(stake)} x ${payoutMultiplier.toFixed(3)} = <b>${rp(payout)}</b><br>
-        3. Profit = ${rp(payout)} - ${rp(stake)} = <b>${rp(profit)} (Untung Bersih)</b>
-      `;
-    }
-  }
-
-  /* KEMBALIKAN CONTOH PARLAY */
-  function exampleParlay() {
-    document.getElementById("pStake").value = "100000";
-    document.getElementById("matchList").innerHTML = "";
-    matchNo = 0;
-    addMatch("1.80", "win");
-    addMatch("2.00", "win");
-    addMatch("1.50", "win");
-    calcParlay();
-  }
-
-  function resetParlay() {
-    document.getElementById("pStake").value = "";
-    document.getElementById("matchList").innerHTML = "";
-    matchNo = 0;
-    addMatch();
-    addMatch();
-    document.getElementById("pConclusion").classList.remove("active");
+    if(lose) { mathBox.innerHTML = "<b>HASIL:</b> Tiket Hangus. Payout Rp 0."; } 
+    else { mathBox.innerHTML = `<b>STEP 1 (Total Odds):</b><br>${mathMatchValues.join(" x ")} = <b>${payoutMultiplier.toFixed(3)}</b><br><br><b>STEP 2 (Payout):</b><br>${rp(stake)} x ${payoutMultiplier.toFixed(3)} = <b>${rp(payout)}</b><br><br><b>STEP 3 (Profit):</b><br>${rp(payout)} - ${rp(stake)} = <b>${rp(profit)}</b> (Untung Bersih)`; }
   }
 
   function calcTarget() {
-    const odds = num(document.getElementById("tOdds").value);
-    const target = num(document.getElementById("tProfit").value);
-    if (odds <= 1) return alert("Odds harus lebih dari 1.");
-    if (target <= 0) return alert("Target profit belum diisi.");
-    const stake = target / (odds - 1);
-    const payout = stake * odds;
-    document.getElementById("pConclusion").classList.remove("active");
-    setResult(stake, odds, payout, target, "Butuh Modal " + rp(stake), "Agar profit menjadi " + rp(target) + ".");
-    addHistory("Target Profit / KEI", stake, payout, target);
+    const rawOdds = num(document.getElementById("tOdds").value); const target = num(document.getElementById("tProfit").value);
+    if (rawOdds === 0 || target <= 0) return alert("Isi data target.");
+    const odds = convertOdds(rawOdds); const stakeRequired = target / (odds - 1); const totalPayout = stakeRequired + target;
+    setResult(stakeRequired, odds, totalPayout, target, "Butuh Modal " + rp(stakeRequired), ""); addHistory("Target Profit", stakeRequired, totalPayout, target);
+    const conBox = document.getElementById("pConclusion"); conBox.classList.add("active");
+    document.getElementById("conTitle").textContent = "Detail Modal";
+    document.getElementById("conDetails").innerHTML = `Target Untung: <b>${rp(target)}</b> | Odds: <b>${rawOdds}</b>`;
+    document.getElementById("conMath").innerHTML = `1. Odds Konversi: <b>${odds.toFixed(3)}</b><br>2. Multiplier Untung (Odds-1): <b>${(odds-1).toFixed(3)}</b><br>3. Modal Dibutuhkan: ${rp(target)} / ${(odds-1).toFixed(3)} = <b>${rp(stakeRequired)}</b>`;
   }
 
-  /* KEMBALIKAN CONTOH TARGET */
-  function exampleTarget() {
-    document.getElementById("tOdds").value = "1.85";
-    document.getElementById("tProfit").value = "100000";
-    calcTarget();
-  }
+  function exampleSingle() { document.getElementById("sStake").value = "100000"; document.getElementById("sOdds").value = "-1.25"; document.getElementById("sResult").value = "win"; toggleCashInput(); explainSingle(); calcSingle(); }
+  function exampleParlay() { document.getElementById("pStake").value = "100000"; document.getElementById("matchList").innerHTML = ""; matchNo = 0; addMatch("-1.25", "win"); addMatch("1.80", "win"); calcParlay(); }
+  function exampleTarget() { document.getElementById("tOdds").value = "-1.25"; document.getElementById("tProfit").value = "100000"; calcTarget(); }
+  function calcCashout() { const stake = num(document.getElementById("cStake").value); const cash = num(document.getElementById("cAmount").value); if (stake <= 0 || cash <= 0) return alert("Isi data."); const profit = cash - stake; setResult(stake, 0, cash, profit, profit > 0 ? "Untung" : "Rugi", ""); addHistory("Cash Out", stake, cash, profit); }
+  function clearResult() { setResult(0, 0, 0, 0, "Belum dihitung", ""); document.getElementById("pConclusion").classList.remove("active"); historyData = []; renderHistory(); }
+  function resetSingle() { document.getElementById("sStake").value = ""; document.getElementById("sOdds").value = ""; document.getElementById("sResult").value = "win"; toggleCashInput(); explainSingle(); }
+  function resetParlay() { document.getElementById("pStake").value = ""; document.getElementById("matchList").innerHTML = ""; matchNo = 0; addMatch(); addMatch(); }
+  function resetTarget() { document.getElementById("tOdds").value = ""; document.getElementById("tProfit").value = ""; }
+  function resetCashout() { document.getElementById("cStake").value = ""; document.getElementById("cAmount").value = ""; }
 
-  function resetTarget() {
-    document.getElementById("tOdds").value = "";
-    document.getElementById("tProfit").value = "";
-    document.getElementById("pConclusion").classList.remove("active");
-  }
-
-  function calcCashout() {
-    const stake = num(document.getElementById("cStake").value);
-    const cash = num(document.getElementById("cAmount").value);
-    if (stake <= 0 || cash <= 0) return alert("Isi data modal & cash out.");
-    const profit = cash - stake;
-    const status = profit > 0 ? "Cash Out Profit" : profit < 0 ? "Cash Out Rugi Sebagian" : "Balik Modal";
-    document.getElementById("pConclusion").classList.remove("active");
-    setResult(stake, 0, cash, profit, status, "Cash out - modal = profit / loss.");
-    addHistory("Cash Out", stake, cash, profit);
-  }
-
-  /* KEMBALIKAN CONTOH CASHOUT */
-  function exampleCashout() {
-    document.getElementById("cStake").value = "100000";
-    document.getElementById("cAmount").value = "120000";
-    calcCashout();
-  }
-
-  function resetCashout() {
-    document.getElementById("cStake").value = "";
-    document.getElementById("cAmount").value = "";
-    document.getElementById("pConclusion").classList.remove("active");
-  }
-
-  /* BERSYARAT MENGHAPUS RIWAYAT JUGA */
-  function clearResult() {
-    setResult(0, 0, 0, 0, "Belum dihitung", "");
-    document.getElementById("pConclusion").classList.remove("active");
-    historyData = [];
-    renderHistory();
-  }
-
-  resetParlay();
-  explainSingle();
-  renderHistory();
+  resetParlay(); explainSingle(); renderHistory();
 </script>
 </body>
 </html>
